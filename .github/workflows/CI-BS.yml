@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: '20'
       - name: Install dependencies
-        run: ls;yarn install --frozen-lockfile;
+        run: ls;yarn install #--frozen-lockfile;
 # tsc outputs type definitions to dist-types/ in the repo root, which are then consumed by the build
       - name: Run output
         run: yarn tsc;
