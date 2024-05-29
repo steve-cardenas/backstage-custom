@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: '20'
       - name: Install dependencies
-        run: cd backstage-custom;yarn install --frozen-lockfile;
+        run: ls;cd backstage-custom;yarn install --frozen-lockfile;
 # tsc outputs type definitions to dist-types/ in the repo root, which are then consumed by the build
       - name: Run output
         run: cd backstage-custom;yarn tsc;
