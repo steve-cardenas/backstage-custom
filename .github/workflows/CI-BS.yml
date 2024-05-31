@@ -38,6 +38,6 @@ jobs:
       - name: ls
         run: ls -R
 
-      - name: Build frontend image
+      - name: Build docker backend
         run: docker image build . -f packages/backend/Dockerfile --tag backstage
         
