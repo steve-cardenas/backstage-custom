@@ -12,13 +12,14 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:14
+#    services:
+#      postgres:
+#        image: postgres:14
 
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+        
       - name: Use Node.js
         uses: actions/setup-node@v2-beta
         with:
@@ -29,14 +30,6 @@ jobs:
       - name: ls
         run: ls -R
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      - name: Build frontend image
+        run: docker image build . -f packages/backend/Dockerfile --tag backstage
         
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: -f ./packages/backend/Dockerfile --tag backstage
-          push: true
-          tags: latest
-         # tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
