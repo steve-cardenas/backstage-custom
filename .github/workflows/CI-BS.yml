@@ -30,11 +30,15 @@ jobs:
         run: yarn tsc;
 # Build the backend, which bundles it all up into the packages/backend/dist folder.
 # The configuration files here should match the one you use inside the Dockerfile below.
-      - name: Run backend
+      - name: Build backend
         run: yarn build:backend --config ../../app-config.yaml
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+  #    - name: Build backend
+  #      run: yarn build
+
+  #    - name: Set up Docker Buildx
+  #      uses: docker/setup-buildx-action@v3
+        
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
