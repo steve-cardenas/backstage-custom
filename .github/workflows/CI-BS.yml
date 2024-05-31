@@ -1,0 +1,44 @@
+name: ci-test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: ls;yarn install #--frozen-lockfile;
+# tsc outputs type definitions to dist-types/ in the repo root, which are then consumed by the build
+      - name: Run output
+        run: yarn tsc;
+# Build the backend, which bundles it all up into the packages/backend/dist folder.
+# The configuration files here should match the one you use inside the Dockerfile below.
+      - name: Run backend
+        run: yarn build:backend --config ../../app-config.yaml
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: -f packages/backend/Dockerfile --tag backstage
+          push: true
+#          tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
