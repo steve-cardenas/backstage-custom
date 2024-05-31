@@ -36,8 +36,8 @@ jobs:
   #    - name: Build backend
   #      run: yarn build
 
-  #    - name: Set up Docker Buildx
-  #      uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
         
       - name: Build and push
         uses: docker/build-push-action@v5
@@ -45,4 +45,5 @@ jobs:
           context: .
           file: -f packages/backend/Dockerfile --tag backstage
           push: true
-#          tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
+          tags: latest
+         # tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
